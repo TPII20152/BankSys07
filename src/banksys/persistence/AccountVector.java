@@ -57,7 +57,7 @@ public class AccountVector implements IAccountRepository, Serializable {
 		}
 	}
 
-	private AbstractAccount findAccount(String number) {
+	AbstractAccount findAccount(String number) {
 		if (this.accounts.size() > 0) {
 			for (int i = 0; i < this.accounts.size(); i++) {
 				AbstractAccount account = (AbstractAccount) this.accounts.elementAt(i);
