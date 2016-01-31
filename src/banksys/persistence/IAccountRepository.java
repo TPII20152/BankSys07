@@ -15,5 +15,7 @@ public interface IAccountRepository {
 
 	public AbstractAccount[] list();
 
-	public int mumberOfAccounts();
+	public int numberOfAccounts();
+	
+	public void save();
 }

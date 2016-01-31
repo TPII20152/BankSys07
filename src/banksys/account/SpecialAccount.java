@@ -1,8 +1,10 @@
 package banksys.account;
 
+import java.io.Serializable;
+
 import banksys.account.exception.NegativeAmountException;
 
-public class SpecialAccount extends OrdinaryAccount {
+public class SpecialAccount extends OrdinaryAccount implements Serializable {
 
 	private double bonus;
 

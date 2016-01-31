@@ -1,9 +1,11 @@
 package banksys.account;
 
+import java.io.Serializable;
+
 import banksys.account.exception.InsufficientFundsException;
 import banksys.account.exception.NegativeAmountException;
 
-public class TaxAccount extends AbstractAccount {
+public class TaxAccount extends AbstractAccount implements Serializable {
 
 	public TaxAccount(String number) {
 		super(number);

@@ -27,6 +27,7 @@ import banksys.control.BankController;
 import banksys.control.exception.BankTransactionException;
 import banksys.log.FileLogManager;
 import banksys.persistence.AccountVector;
+import banksys.persistence.BankDAO;
 
 public class ServiceWindow extends JFrame {
 
@@ -467,6 +468,6 @@ public class ServiceWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new ServiceWindow(new BankController(new AccountVector(), new FileLogManager()));
+		new ServiceWindow(new BankController(new BankDAO("banco.dat"), new FileLogManager()));
 	}
 }

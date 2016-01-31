@@ -1,5 +1,6 @@
 package banksys.persistence;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import banksys.account.AbstractAccount;
@@ -7,7 +8,7 @@ import banksys.persistence.exception.AccountCreationException;
 import banksys.persistence.exception.AccountDeletionException;
 import banksys.persistence.exception.AccountNotFoundException;
 
-public class AccountVector implements IAccountRepository {
+public class AccountVector implements IAccountRepository, Serializable {
 
 	private Vector<AbstractAccount> accounts = null;
 
@@ -43,7 +44,7 @@ public class AccountVector implements IAccountRepository {
 		return list;
 	}
 
-	public int mumberOfAccounts() {
+	public int numberOfAccounts() {
 		return this.accounts.size();
 	}
 
@@ -66,5 +67,9 @@ public class AccountVector implements IAccountRepository {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void save() {
 	}
 }

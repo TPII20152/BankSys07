@@ -1,9 +1,11 @@
 package banksys.account;
 
+import java.io.Serializable;
+
 import banksys.account.exception.InsufficientFundsException;
 import banksys.account.exception.NegativeAmountException;
 
-public abstract class AbstractAccount {
+public abstract class AbstractAccount implements Serializable {
 
 	protected String number;
 	protected double balance;
