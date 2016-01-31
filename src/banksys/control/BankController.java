@@ -48,7 +48,7 @@ public class BankController {
 		} catch (NegativeAmountException nae) {
 			throw new BankTransactionException(nae);
 		}
-
+		this.repository.save();
 	}
 
 	public void doDebit(String number, double amount) throws BankTransactionException {
@@ -65,6 +65,7 @@ public class BankController {
 		} catch (NegativeAmountException nae) {
 			throw new BankTransactionException(nae);
 		}
+		this.repository.save();
 	}
 
 	public double getBalance(String number) throws BankTransactionException {
@@ -101,6 +102,7 @@ public class BankController {
 		} catch (NegativeAmountException nae) {
 			throw new BankTransactionException(nae);
 		}
+		this.repository.save();
 	}
 
 	public void doEarnInterest(String number) throws BankTransactionException, IncompatibleAccountException {
@@ -116,6 +118,7 @@ public class BankController {
 		} else {
 			throw new IncompatibleAccountException(number);
 		}
+		this.repository.save();
 	}
 
 	public void doEarnBonus(String number) throws BankTransactionException, IncompatibleAccountException {
@@ -131,5 +134,7 @@ public class BankController {
 		} else {
 			throw new IncompatibleAccountException(number);
 		}
+		this.repository.save();
 	}
+	
 }

@@ -8,11 +8,11 @@ import banksys.persistence.exception.AccountCreationException;
 import banksys.persistence.exception.AccountDeletionException;
 import banksys.persistence.exception.AccountNotFoundException;
 
-public class BancoDAO implements IAccountRepository, Serializable {
+public class BankDAO implements IAccountRepository, Serializable {
 	IAccountRepository contas;
 	File arquivo;
 
-	public BancoDAO(String path) {
+	public BankDAO(String path) {
 		this.arquivo = new File(path);
 
 		if (this.arquivo.exists()) {
@@ -30,13 +30,13 @@ public class BancoDAO implements IAccountRepository, Serializable {
 	@Override
 	public void create(AbstractAccount conta) throws AccountCreationException {
 		contas.create(conta);
-		salvar();
+		save();
 	}
 
 	@Override
 	public void delete(String numero) throws AccountDeletionException  {
 		contas.delete(numero);
-		salvar();
+		save();
 	}
 
 	@Override
@@ -54,7 +54,8 @@ public class BancoDAO implements IAccountRepository, Serializable {
 		return contas.numberOfAccounts();
 	}
 
-	public void salvar() {
+	@Override
+	public void save() {
 		try {
 			Serializador.serializar(arquivo.getPath(), contas);
 		} catch (Exception e) {
