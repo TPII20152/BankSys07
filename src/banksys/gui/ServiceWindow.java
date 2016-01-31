@@ -25,6 +25,7 @@ import banksys.account.SpecialAccount;
 import banksys.account.TaxAccount;
 import banksys.control.BankController;
 import banksys.control.exception.BankTransactionException;
+import banksys.log.FileLogManager;
 import banksys.persistence.AccountVector;
 import banksys.persistence.BankDAO;
 
@@ -82,7 +83,7 @@ public class ServiceWindow extends JFrame {
 
 		buttonWidth = 150;
 
-		setTitle("Terminal de Autoatendimento");
+		setTitle("Self Service Terminal");
 		setMinimumSize(new Dimension(800, 600));
 
 		JPanel mainPane = new JPanel(new BorderLayout(15, 15));
@@ -106,28 +107,28 @@ public class ServiceWindow extends JFrame {
 
 		setButtonInitialStatus();
 
-		JLabel newAccountLabel = new JLabel("CADASTRAR CONTA");
+		JLabel newAccountLabel = new JLabel("REGISTER ACCOUNT");
 		newAccountLabel.setFont(defaultTextFont);
 		newAccountLabel.setForeground(foregroundColor);
-		JLabel removeAccountLabel = new JLabel("REMOVER CONTA");
+		JLabel removeAccountLabel = new JLabel("REMOVE ACCOUNT");
 		removeAccountLabel.setFont(defaultTextFont);
 		removeAccountLabel.setForeground(foregroundColor);
-		JLabel depositLabel = new JLabel("FAZER DEPÓSITO");
+		JLabel depositLabel = new JLabel("DO DEPOSIT");
 		depositLabel.setFont(defaultTextFont);
 		depositLabel.setForeground(foregroundColor);
-		JLabel withdrawLabel = new JLabel("FAZER SAQUE");
+		JLabel withdrawLabel = new JLabel("DO WITHDRAW");
 		withdrawLabel.setFont(defaultTextFont);
 		withdrawLabel.setForeground(foregroundColor);
-		JLabel transferLabel = new JLabel("FAZER TRANFERÊNCIA");
+		JLabel transferLabel = new JLabel("DO TRANFER");
 		transferLabel.setFont(defaultTextFont);
 		transferLabel.setForeground(foregroundColor);
-		JLabel balanceLabel = new JLabel("VERIFICAR SALDO");
+		JLabel balanceLabel = new JLabel("CHECK BALANCE");
 		balanceLabel.setFont(defaultTextFont);
 		balanceLabel.setForeground(foregroundColor);
-		JLabel earningInterestLabel = new JLabel("RENDER JUROS");
+		JLabel earningInterestLabel = new JLabel("EARN INTEREST");
 		earningInterestLabel.setFont(defaultTextFont);
 		earningInterestLabel.setForeground(foregroundColor);
-		JLabel earningBonusLabel = new JLabel("RENDER BÓNUS");
+		JLabel earningBonusLabel = new JLabel("EARN BONUS");
 		earningBonusLabel.setFont(defaultTextFont);
 		earningBonusLabel.setForeground(foregroundColor);
 
@@ -149,7 +150,7 @@ public class ServiceWindow extends JFrame {
 		centerEastPane.setBackground(backgroundColor);
 		centerPane.add(centerEastPane, BorderLayout.EAST);
 
-		JLabel welcomingLabel = new JLabel("BEM VINDO AO TERMINAL DE AUTOATENDIMENTO");
+		JLabel welcomingLabel = new JLabel("WELCOME TO SELF SERVICE TERMINAL");
 		welcomingLabel.setFont(defaultFont);
 		welcomingLabel.setForeground(foregroundColor);
 
@@ -209,7 +210,7 @@ public class ServiceWindow extends JFrame {
 	}
 
 	private void setButtonInitialStatus() {
-		southBtn.setText("SAIR");
+		southBtn.setText("EXIT");
 		southBtn.setFont(defaultTextFont);
 		southBtn.setForeground(foregroundColor);
 
@@ -225,41 +226,41 @@ public class ServiceWindow extends JFrame {
 	}
 
 	protected void earningBonus() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 
 		if (accountNumber != null) {
 			try {
 				Integer.parseInt(accountNumber);
 
 				bank.doEarnBonus(accountNumber);
-				JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+				JOptionPane.showMessageDialog(null, "Operation Successful!");
 			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+				JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 			} catch (BankTransactionException bte) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+				JOptionPane.showMessageDialog(null, "ERRORR: " + bte.getMessage());
 			}
 		}
 	}
 
 	protected void earningInterest() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 
 		if (accountNumber != null) {
 			try {
 				Integer.parseInt(accountNumber);
 
 				bank.doEarnInterest(accountNumber);
-				JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+				JOptionPane.showMessageDialog(null, "Operation Successful!");
 			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+				JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 			} catch (BankTransactionException bte) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+				JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 			}
 		}
 	}
 
 	protected void balance() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 
 		if (accountNumber != null) {
 			try {
@@ -270,22 +271,22 @@ public class ServiceWindow extends JFrame {
 				f.setMaximumFractionDigits(2);
 
 				double balance = bank.getBalance(accountNumber);
-				JOptionPane.showMessageDialog(null, "Seu saldo é de R$ " + f.format(balance),
-						"Saldo da conta " + accountNumber, JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Your balance is $ " + f.format(balance),
+						"Balance of Account " + accountNumber, JOptionPane.INFORMATION_MESSAGE);
 			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+				JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 			} catch (BankTransactionException bte) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+				JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 			}
 		}
 	}
 
 	protected void transfer() {
-		String originAccountNumber = JOptionPane.showInputDialog("Escreva o número da conta de origem");
+		String originAccountNumber = JOptionPane.showInputDialog("Enter the origin account number.");
 		if (originAccountNumber != null) {
-			String destinyAccountNumber = JOptionPane.showInputDialog("Escreva o número da conta de origem");
+			String destinyAccountNumber = JOptionPane.showInputDialog("Enter the destiny account number.");
 			if (destinyAccountNumber != null) {
-				String valueStr = JOptionPane.showInputDialog("Escreva o valor a ser transferido.");
+				String valueStr = JOptionPane.showInputDialog("Enter the amount to be transfered.");
 				if (valueStr != null) {
 					valueStr = valueStr.replace(',', '.');
 					try {
@@ -294,11 +295,11 @@ public class ServiceWindow extends JFrame {
 						double value = Double.parseDouble(valueStr);
 
 						bank.doTransfer(originAccountNumber, destinyAccountNumber, value);
-						JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+						JOptionPane.showMessageDialog(null, "Operation Successful!");
 					} catch (NumberFormatException nfe) {
-						JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+						JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 					} catch (BankTransactionException bte) {
-						JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+						JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 					}
 				}
 			}
@@ -306,9 +307,9 @@ public class ServiceWindow extends JFrame {
 	}
 
 	protected void withdraw() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 		if (accountNumber != null) {
-			String valueStr = JOptionPane.showInputDialog("Escreva o valor a ser sacado.");
+			String valueStr = JOptionPane.showInputDialog("Enter the amount to be withdraw.");
 			valueStr = valueStr.replace(',', '.');
 			if (valueStr != null) {
 				try {
@@ -316,20 +317,20 @@ public class ServiceWindow extends JFrame {
 					double value = Double.parseDouble(valueStr);
 
 					bank.doDebit(accountNumber, value);
-					JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+					JOptionPane.showMessageDialog(null, "Operation Successful!");
 				} catch (NumberFormatException nfe) {
-					JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+					JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 				} catch (BankTransactionException bte) {
-					JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+					JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 				}
 			}
 		}
 	}
 
 	protected void deposit() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 		if (accountNumber != null) {
-			String valueStr = JOptionPane.showInputDialog("Escreva o valor a ser depositado.");
+			String valueStr = JOptionPane.showInputDialog("Enter the value to be deposited.");
 			valueStr = valueStr.replace(',', '.');
 			if (valueStr != null) {
 				try {
@@ -337,30 +338,30 @@ public class ServiceWindow extends JFrame {
 					double value = Double.parseDouble(valueStr);
 
 					bank.doCredit(accountNumber, value);
-					JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+					JOptionPane.showMessageDialog(null, "Operation Successful!");
 				} catch (NumberFormatException nfe) {
-					JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+					JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 				} catch (BankTransactionException bte) {
-					JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+					JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 				}
 			}
 		}
 	}
 
 	protected void removeAccount() {
-		String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+		String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 		if (accountNumber != null) {
 			try {
 				Integer.parseInt(accountNumber);
 
 				try {
 					bank.removeAccount(accountNumber);
-					JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+					JOptionPane.showMessageDialog(null, "Operation Successful!");
 				} catch (BankTransactionException bte) {
-					JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+					JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 				}
 			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+				JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 			}
 		}
 	}
@@ -368,12 +369,12 @@ public class ServiceWindow extends JFrame {
 	protected void addNewAccount() {
 		AbstractAccount account = null;
 
-		String[] options = { "Comum", "Especial", "Poupança", "Imposto" };
-		int accountType = JOptionPane.showOptionDialog(null, "Escolha o tipo de conta.", "Tipo de Conta",
+		String[] options = { "Ordinary", "Special", "Saving", "Tax" };
+		int accountType = JOptionPane.showOptionDialog(null, "Choose your account type.", "Account Type",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, 0);
 
 		if (accountType >= 0) {
-			String accountNumber = JOptionPane.showInputDialog("Escreva o número da conta");
+			String accountNumber = JOptionPane.showInputDialog("Enter your account number.");
 
 			if (accountNumber != null) {
 				try {
@@ -398,13 +399,13 @@ public class ServiceWindow extends JFrame {
 
 					try {
 						bank.addAccount(account);
-						JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
+						JOptionPane.showMessageDialog(null, "Operation Successful!");
 					} catch (BankTransactionException bte) {
-						JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
+						JOptionPane.showMessageDialog(null, "ERROR: " + bte.getMessage());
 					}
 
 				} catch (NumberFormatException nfe) {
-					JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
+					JOptionPane.showMessageDialog(null, "ERRORR: Invalid Value");
 				}
 			}
 		}
@@ -467,6 +468,6 @@ public class ServiceWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new ServiceWindow(new BankController(new BankDAO("banco.dat")));
+		new ServiceWindow(new BankController(new BankDAO("banco.dat"), new FileLogManager()));
 	}
 }

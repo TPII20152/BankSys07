@@ -7,6 +7,7 @@ import banksys.account.exception.InsufficientFundsException;
 import banksys.account.exception.NegativeAmountException;
 import banksys.control.exception.BankTransactionException;
 import banksys.control.exception.IncompatibleAccountException;
+import banksys.log.AbsLogManager;
 import banksys.persistence.IAccountRepository;
 import banksys.persistence.exception.AccountCreationException;
 import banksys.persistence.exception.AccountDeletionException;
@@ -15,14 +16,17 @@ import banksys.persistence.exception.AccountNotFoundException;
 public class BankController {
 
 	private IAccountRepository repository;
+	private AbsLogManager log;
 
-	public BankController(IAccountRepository repository) {
+	public BankController(IAccountRepository repository, AbsLogManager log) {
 		this.repository = repository;
+		this.log = log;
 	}
 
 	public void addAccount(AbstractAccount account) throws BankTransactionException {
 		try {
 			this.repository.create(account);
+			this.log.registerAccountCreation(account);
 		} catch (AccountCreationException ace) {
 			throw new BankTransactionException(ace);
 		}
@@ -31,6 +35,7 @@ public class BankController {
 	public void removeAccount(String number) throws BankTransactionException {
 		try {
 			this.repository.delete(number);
+			this.log.registerAccountRemoval(number);
 		} catch (AccountDeletionException ade) {
 			throw new BankTransactionException(ade);
 		}
@@ -45,6 +50,7 @@ public class BankController {
 		}
 		try {
 			account.credit(amount);
+			this.log.registerAccountCredit(number, amount);
 		} catch (NegativeAmountException nae) {
 			throw new BankTransactionException(nae);
 		}
@@ -60,6 +66,7 @@ public class BankController {
 		}
 		try {
 			account.debit(amount);
+			this.log.registerAccountDebit(number, amount);
 		} catch (InsufficientFundsException ife) {
 			throw new BankTransactionException(ife);
 		} catch (NegativeAmountException nae) {
@@ -97,6 +104,7 @@ public class BankController {
 		try {
 			fromAccount.debit(amount);
 			toAccount.credit(amount);
+			this.log.registerAccountTranfer(fromNumber, toNumber, amount);
 		} catch (InsufficientFundsException sie) {
 			throw new BankTransactionException(sie);
 		} catch (NegativeAmountException nae) {
@@ -115,6 +123,7 @@ public class BankController {
 
 		if (auxAccount instanceof SavingsAccount) {
 			((SavingsAccount) auxAccount).earnInterest();
+			this.log.registerAccountInterestEarning(number);
 		} else {
 			throw new IncompatibleAccountException(number);
 		}
@@ -131,6 +140,7 @@ public class BankController {
 
 		if (auxAccount instanceof SpecialAccount) {
 			((SpecialAccount) auxAccount).earnBonus();
+			this.log.registerAccountBonusEarning(number);
 		} else {
 			throw new IncompatibleAccountException(number);
 		}
