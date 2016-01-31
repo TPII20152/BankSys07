@@ -67,7 +67,7 @@ public class OrdinaryAccountTest {
 		double lastBalance = account.getBalance();
 
 		try {
-			account.debit(amount+1);
+			account.debit(account.getBalance()+1);
 		} catch (NegativeAmountException e) {}
 		  catch (InsufficientFundsException e) {}
 
