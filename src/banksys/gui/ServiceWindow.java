@@ -285,12 +285,12 @@ public class ServiceWindow extends JFrame {
 						Integer.parseInt(destinyAccountNumber);
 						double value = Double.parseDouble(valueStr);
 
-						banco.transferir(originAccountNumber, destinyAccountNumber, value);
+						bank.doTransfer(originAccountNumber, destinyAccountNumber, value);
 						JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
 					} catch (NumberFormatException nfe) {
 						JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
-					} catch (TNRException tnre) {
-						JOptionPane.showMessageDialog(null, "ERRO: " + tnre.getMessage());
+					} catch (BankTransactionException bte) {
+						JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 					}
 				}
 			}
