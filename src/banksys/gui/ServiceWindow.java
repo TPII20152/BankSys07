@@ -25,6 +25,7 @@ import banksys.account.SpecialAccount;
 import banksys.account.TaxAccount;
 import banksys.control.BankController;
 import banksys.control.exception.BankTransactionException;
+import banksys.log.FileLogManager;
 import banksys.persistence.AccountVector;
 
 public class ServiceWindow extends JFrame {
@@ -466,6 +467,6 @@ public class ServiceWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new ServiceWindow(new BankController(new AccountVector()));
+		new ServiceWindow(new BankController(new AccountVector(), new FileLogManager()));
 	}
 }

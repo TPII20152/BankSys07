@@ -33,46 +33,46 @@ public class FileLogManager implements AbsLogManager {
 	}
 
 	@Override
-	public void registerAccountRemoval(AbstractAccount account) {
-		String entry = getTimeString() + " account " + account.getNumber() + " removed.";
+	public void registerAccountRemoval(String number) {
+		String entry = getTimeString() + " account " + number + " removed.";
 		
 		out.println(entry);	
 	}
 
 	@Override
-	public void registerAccountCredit(AbstractAccount account, double amount) {
-		String entry = getTimeString() + " credited " + amount + " in account " + account.getNumber() + ".";
+	public void registerAccountCredit(String number, double amount) {
+		String entry = getTimeString() + " credited " + amount + " in account " + number + ".";
 		
 		out.println(entry);	
 	}
 
 	@Override
-	public void registerAccountDebit(AbstractAccount account, double amount) {
-		String entry = getTimeString() + " debited " + amount + " from account " + account.getNumber() + ".";
+	public void registerAccountDebit(String number, double amount) {
+		String entry = getTimeString() + " debited " + amount + " from account " + number + ".";
 		
 		out.println(entry);	
 	}
 
 	@Override
-	public void registerAccountTranfer(AbstractAccount originAccount, AbstractAccount destinyAccount, double amount) {
+	public void registerAccountTranfer(String originNumber, String destinyNumber, double amount) {
 		String entry = getTimeString() + " transfered " + amount + 
-					   " from account " + originAccount.getNumber() + 
-					   " to account " + destinyAccount + ".";
+					   " from account " + originNumber + 
+					   " to account " + destinyNumber + ".";
 		
 		out.println(entry);	
 	}
 
 	@Override
-	public void registerAccountInterestEarning(AbstractAccount account) {
-		String entry = getTimeString() + " account " + account.getNumber() + 
+	public void registerAccountInterestEarning(String number) {
+		String entry = getTimeString() + " account " + number + 
 					   " has earned interest.";
 	
 		out.println(entry);	
 	}
 
 	@Override
-	public void registerAccountBonusEarning(AbstractAccount account) {
-		String entry = getTimeString() + " account " + account.getNumber() + 
+	public void registerAccountBonusEarning(String number) {
+		String entry = getTimeString() + " account " + number + 
 				   " has earned bonus.";
 
 		out.println(entry);	
@@ -84,21 +84,21 @@ public class FileLogManager implements AbsLogManager {
 		return  current.get(Calendar.DAY_OF_MONTH) + "-" +
 				current.get(Calendar.MONTH) + "-" +
 				current.get(Calendar.YEAR) + "(" +
-				current.get(Calendar.HOUR_OF_DAY) + ":" +
-				current.get(Calendar.MINUTE) + ":" +
+				current.get(Calendar.HOUR_OF_DAY) + "-" +
+				current.get(Calendar.MINUTE) + "-" +
 				current.get(Calendar.SECOND) + ")";
 	}
 
 	@Override
 	public void registerSectionEnding() {
-		String entry = getTimeString() + "Section Ending.";
+		String entry = getTimeString() + " Section Ending.";
 
 		out.println(entry);		
 	}
 
 	@Override
 	public void registerSectionStarting() {
-		String entry = getTimeString() + "Section Starting.";
+		String entry = getTimeString() + " Section Starting.";
 
 		out.println(entry);
 	}
