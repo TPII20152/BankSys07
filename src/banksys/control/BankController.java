@@ -15,7 +15,7 @@ import banksys.persistence.exception.AccountNotFoundException;
 
 public class BankController {
 
-	private IAccountRepository repository;
+	IAccountRepository repository;
 	private AbsLogManager log;
 
 	public BankController(IAccountRepository repository, AbsLogManager log) {
