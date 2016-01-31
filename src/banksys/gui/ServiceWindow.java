@@ -346,10 +346,10 @@ public class ServiceWindow extends JFrame {
 				Integer.parseInt(accountNumber);
 
 				try {
-					banco.remover(accountNumber);
+					bank.removeAccount(accountNumber);
 					JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
-				} catch (CIException cie) {
-					JOptionPane.showMessageDialog(null, "ERRO: " + cie.getMessage());
+				} catch (BankTransactionException bte) {
+					JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 				}
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
