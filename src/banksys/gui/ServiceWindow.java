@@ -240,12 +240,12 @@ public class ServiceWindow extends JFrame {
 			try {
 				Integer.parseInt(accountNumber);
 
-				banco.renderJuros(accountNumber);
+				bank.doEarnInterest(accountNumber);
 				JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
-			} catch (TNRException tnre) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + tnre.getMessage());
+			} catch (BankTransactionException bte) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 			}
 		}
 	}
