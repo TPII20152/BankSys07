@@ -307,12 +307,12 @@ public class ServiceWindow extends JFrame {
 					Integer.parseInt(accountNumber);
 					double value = Double.parseDouble(valueStr);
 
-					banco.debitar(accountNumber, value);
+					bank.doDebit(accountNumber, value);
 					JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
 				} catch (NumberFormatException nfe) {
 					JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
-				} catch (TNRException tnre) {
-					JOptionPane.showMessageDialog(null, "ERRO: " + tnre.getMessage());
+				} catch (BankTransactionException bte) {
+					JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 				}
 			}
 		}
