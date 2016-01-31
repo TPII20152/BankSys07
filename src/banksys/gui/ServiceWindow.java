@@ -261,13 +261,13 @@ public class ServiceWindow extends JFrame {
 				f.setMinimumFractionDigits(2);
 				f.setMaximumFractionDigits(2);
 
-				double balance = banco.saldo(accountNumber);
+				double balance = bank.getBalance(accountNumber);
 				JOptionPane.showMessageDialog(null, "Seu saldo é de R$ " + f.format(balance),
 						"Saldo da conta " + accountNumber, JOptionPane.INFORMATION_MESSAGE);
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(null, "ERRO: Valor Inválido");
-			} catch (TNRException tnre) {
-				JOptionPane.showMessageDialog(null, "ERRO: " + tnre.getMessage());
+			} catch (BankTransactionException bte) {
+				JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 			}
 		}
 	}
