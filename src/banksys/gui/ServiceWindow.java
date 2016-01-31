@@ -25,6 +25,7 @@ import banksys.account.SpecialAccount;
 import banksys.account.TaxAccount;
 import banksys.control.BankController;
 import banksys.control.exception.BankTransactionException;
+import banksys.persistence.AccountVector;
 
 public class ServiceWindow extends JFrame {
 
@@ -71,16 +72,16 @@ public class ServiceWindow extends JFrame {
 			e.printStackTrace();
 		}
 
-		backgroundColor = new Color(255, 229, 20);
-		foregroundColor = new Color(2, 92, 168);
-		textColor = new Color(255, 255, 255);
+		backgroundColor = new Color(255, 20, 20);
+		foregroundColor = new Color(255, 255, 255);
+		textColor = new Color(255, 20, 20);
 
 		defaultFont = new Font(Font.SANS_SERIF, Font.BOLD, 24);
 		defaultTextFont = new Font(Font.SANS_SERIF, Font.CENTER_BASELINE, 16);
 
 		buttonWidth = 150;
 
-		setTitle("Terminal de Auto-Atendimento");
+		setTitle("Terminal de Autoatendimento");
 		setMinimumSize(new Dimension(800, 600));
 
 		JPanel mainPane = new JPanel(new BorderLayout(15, 15));
@@ -147,7 +148,7 @@ public class ServiceWindow extends JFrame {
 		centerEastPane.setBackground(backgroundColor);
 		centerPane.add(centerEastPane, BorderLayout.EAST);
 
-		JLabel welcomingLabel = new JLabel("BEM VINDO AO BANCO DO BRASIL");
+		JLabel welcomingLabel = new JLabel("BEM VINDO AO TERMINAL DE AUTOATENDIMENTO");
 		welcomingLabel.setFont(defaultFont);
 		welcomingLabel.setForeground(foregroundColor);
 
@@ -165,6 +166,7 @@ public class ServiceWindow extends JFrame {
 		eastPane.setBackground(backgroundColor);
 		eastPane.setPreferredSize(new Dimension(buttonWidth, 0));
 
+		southBtn.setForeground(textColor);
 		southPane.add(southBtn, BorderLayout.CENTER);
 		southPane.setBackground(backgroundColor);
 		southPane.setPreferredSize(new Dimension(800, 60));
@@ -464,6 +466,6 @@ public class ServiceWindow extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new JanelaAtendimento(new BancoBrasil(new BancoDAO("banco.ser")));
+		new ServiceWindow(new BankController(new AccountVector()));
 	}
 }
