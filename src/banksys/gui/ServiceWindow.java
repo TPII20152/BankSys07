@@ -18,6 +18,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import banksys.account.AbstractAccount;
+import banksys.account.OrdinaryAccount;
+import banksys.account.SavingsAccount;
+import banksys.account.SpecialAccount;
+import banksys.account.TaxAccount;
 import banksys.control.BankController;
 import banksys.control.exception.BankTransactionException;
 
@@ -358,7 +363,7 @@ public class ServiceWindow extends JFrame {
 	}
 
 	protected void addNewAccount() {
-		ContaAbstrata conta = null;
+		AbstractAccount account = null;
 
 		String[] options = { "Comum", "Especial", "Poupança", "Imposto" };
 		int accountType = JOptionPane.showOptionDialog(null, "Escolha o tipo de conta.", "Tipo de Conta",
@@ -373,26 +378,26 @@ public class ServiceWindow extends JFrame {
 
 					switch (accountType) {
 					case 0:
-						conta = new Conta(accountNumber);
+						account = new OrdinaryAccount(accountNumber);
 						break;
 					case 1:
-						conta = new ContaEspecial(accountNumber);
+						account = new SpecialAccount(accountNumber);
 						break;
 					case 2:
-						conta = new ContaPoupanca(accountNumber);
+						account = new SavingsAccount(accountNumber);
 						break;
 					case 3:
-						conta = new ContaImposto(accountNumber);
+						account = new TaxAccount(accountNumber);
 						break;
 					default:
 						break;
 					}
 
 					try {
-						banco.cadastrar(conta);
+						bank.addAccount(account);
 						JOptionPane.showMessageDialog(null, "Operação realizada com sucesso!");
-					} catch (CEException cee) {
-						JOptionPane.showMessageDialog(null, "ERRO: " + cee.getMessage());
+					} catch (BankTransactionException bte) {
+						JOptionPane.showMessageDialog(null, "ERRO: " + bte.getMessage());
 					}
 
 				} catch (NumberFormatException nfe) {
