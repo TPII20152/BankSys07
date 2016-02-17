@@ -25,7 +25,7 @@ public class OrdinaryAccountTest {
 			account.credit(amount);
 		} catch (NegativeAmountException e) {}
 		
-		assertEquals(amount, account.getBalance(), 0);
+		assertEquals(0, account.getBalance(), 0);
 	}
 	
 	@Test
